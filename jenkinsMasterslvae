@@ -7,7 +7,7 @@ useradd jenkins
 passwd jenkins
 ssh-keygen 
 su jenkins
-ssh-copy-id jenkins@agentpublicIP
+ssh-copy-id jenkins@agentpublicIP  
 ssh jenkins@agentpublicIP
 sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key 
@@ -17,6 +17,7 @@ systemctl start jenkins
 systemctl enable jenkins
 cat /var/lib/jenkins/secrets/initialAdminPassword
 
+cp /root/.ssh/known_hosts /home/jenkins/.ssh/known_hosts
 
 Agent side :
 hostname agent
