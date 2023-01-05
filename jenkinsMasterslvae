@@ -1,0 +1,34 @@
+Master side:
+hostname master
+exit
+sudo amazon-linux-extras install java-openjdk11 -y
+yum install git maven tree -y
+useradd jenkins
+passwd jenkins
+ssh-keygen 
+su jenkins
+ssh-copy-id jenkins@agentpublicIP
+ssh jenkins@agentpublicIP
+sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key 
+sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+sudo yum -y install jenkins 
+systemctl start jenkins
+systemctl enable jenkins
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+Agent side :
+hostname agent
+exit
+sudo su
+sudo amazon-linux-extras install java-openjdk11 -y
+yum install maven git tree -y
+useradd jenkins
+passwd jenkins
+ssh-keygen -t rsa
+
+vi /etc/ssh/sshd_config 
+systemctl restart sshd
+su jenkins
+ssh-keygen -t rsa
