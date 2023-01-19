@@ -1,24 +1,19 @@
-git,tree,maven,java intsallation in amazonlinux/centos:
+git,tree,maven,java,tomcat intsallation in amazonlinux/centos:
 
-yum install git tree -y
 
 sudo amazon-linux-extras install java-openjdk11 -y
 
-yum install maven -y
-
-
---------------------------------------
-
-Tomcat installatin in amazonlinux/centos
-sudo yum install tomcat tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc -y
+yum install git tree maven tomcat tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc -y
 
 systemctl start tomcat
 
 systemctl enable tomcat
 
-------------------------------
+Tomcat credentials: /usr/share/tomcat/conf/tomcat-users.xml
+       <user name="admin" password="adminadmin" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" />
 
-
+Tomcat port number change: /usr/share/tomcat/conf/server.xml
+--------------------------------------
 Jenkins in amazonlinux /centos:
 
 
@@ -30,13 +25,13 @@ sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key 
 
-sudo yum -y install jenkins -y
-
-echo "--------Jenkins,Java installed"
+sudo yum install jenkins -y
 
 sudo systemctl enable jenkins
 
 sudo systemctl start jenkins
+
+Jenkins password location: cat /var/lib/jenkins/secrets/initialAdminPassword
 ---------------------------------------------------------
 
 Nexus:
