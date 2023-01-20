@@ -1,0 +1,121 @@
+Nagios master side:
+
+sudo apt update
+sudo apt install -y autoconf bc gawk dc build-essential gcc libc6 make wget unzip apache2 php libapache2-mod-php libgd-dev libmcrypt-dev make libssl-dev snmp libnet-snmp-perl gettext
+cd ~/
+wget https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.6.tar.gz
+tar -xf nagios-4.4.6.tar.gz
+cd nagioscore-*/
+sudo ./configure --with-httpd-conf=/etc/apache2/sites-enabled
+sudo make all
+sudo make install-groups-users
+sudo usermod -a -G nagios www-data
+sudo make install
+sudo make install-daemoninit
+sudo make install-commandmode
+sudo make install-config
+sudo make install-webconf
+sudo a2enmod rewrite cgi
+systemctl restart apache2
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+
+for svc in Apache ssh
+do
+ufw allow $svc
+done
+
+ufw enable
+ufw status numbered
+sudo apt install monitoring-plugins nagios-nrpe-plugin
+cd /usr/local/nagios/etc
+mkdir -p /usr/local/nagios/etc/servers
+
+vi nagios.cfg
+Uncomment the 'cfg_dir' option that will be used for sotring all server hots configurations.
+cfg_dir=/usr/local/nagios/etc/servers
+
+vi resource.cfg
+Define the Nagios Monitoring Plugins path by changing the default configuration as below.
+$USER1$=/usr/lib/nagios/plugins
+
+systemctl start nagios
+systemctl enable nagios
+systemctl status nagios
+systemctl restart apache2
+
+http://masterip/nagios/
+
+Agent side:   Add Linux Host to Monitor:
+
+hostname client01
+sudo apt update
+sudo apt install nagios-nrpe-server monitoring-plugins
+cd /etc/nagios/
+vi nrpe_local.cfg
+command[check_root]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10% -p /
+command[check_ping]=/usr/lib/nagios/plugins/check_ping -H agentPrivateip -w 100.0,20% -c 500.0,60% -p 5
+command[check_ssh]=/usr/lib/nagios/plugins/check_ssh -4 agentPrivateip
+command[check_http]=/usr/lib/nagios/plugins/check_http -I agentPrivateip
+command[check_apt]=/usr/lib/nagios/plugins/check_apt
+
+vi nrpe.cfg
+Uncomment the "server_address" line and change the value with the "client01" IP address.
+server_address=agentPrivateip
+One the "allowed_hosts" line, add the Nagios Server IP address "MasterIP".
+allowed_hosts=127.0.0.1,::1,MasterPrivateIP
+
+systemctl restart nagios-nrpe-server
+systemctl enable nagios-nrpe-server
+systemctl status nagios-nrpe-server
+
+
+Adding another host : Master side:
+
+cd /usr/local/nagios/etc
+vi servers/client01.cfg
+
+define host {
+use                          linux-server
+host_name                    slave
+alias                        Ubuntu Host
+address                      44.203.168.12
+register                     1
+}
+
+define service {
+host_name                       slave
+service_description             PING
+check_command                   check_ping!100.0,20%!500.0,60%
+max_check_attempts              2
+check_interval                  2
+retry_interval                  2
+check_period                    24x7
+}
+
+define service {
+      host_name                       slave
+      service_description             Check SSH
+      check_command                   check_ssh
+      max_check_attempts              2
+      check_interval                  2
+      retry_interval                  2
+      check_period                    24x7
+}
+
+systemctl restart nagios
+
+
+
+he Default ports used by common Nagios Plugins are as given under −
+
+Butcheck_nt (nsclient++) 12489
+NRPE 5666
+NSCA 5667
+NCPA 5693
+MSSQL 1433
+MySQL 3306
+PostgreSQL 5432
+MongoDB 27017, 27018
+OracleDB 1521
+Email (SMTP) 25, 465, 587
+WMI 135, 445 / additionaldynamically-assigned ports in 1024-1034 range
