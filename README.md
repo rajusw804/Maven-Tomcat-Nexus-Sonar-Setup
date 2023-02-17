@@ -6,8 +6,15 @@ systemctl start tomcat
 
 systemctl enable tomcat
 
-/usr/share/tomcat
+/usr/share/tomcat/conf/tomcat-users.xml
 
+<role rolename="manager-gui"/>
+<user username="admin" password="admin" roles="manager-gui"/>
+
+:wq!
+
+
+/usr/share/tomcat
 bin  conf  lib  logs  temp  webapps  work
 
 
