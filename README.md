@@ -17,6 +17,10 @@ systemctl enable tomcat
 /usr/share/tomcat
 bin  conf  lib  logs  temp  webapps  work
 
+cd java-docker-project
+
+mvn package
+
 cp target/java-tomcat-maven-example.war /usr/share/tomcat/webapps/
 
 
