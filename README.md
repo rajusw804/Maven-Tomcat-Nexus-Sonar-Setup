@@ -1,4 +1,4 @@
-yum install git maven java-openjdk11 maven -y
+yum install git maven java-openjdk11 -y
 
 sudo yum install tomcat tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc -y
 
