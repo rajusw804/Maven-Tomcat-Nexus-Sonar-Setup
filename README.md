@@ -9,15 +9,25 @@ systemctl enable tomcat
 vi /usr/share/tomcat/conf/tomcat-users.xml
 
 <role rolename="tomcat"/>
+
 <role rolename="admin-script"/>
+
 <role rolename="manager-script"/>
+
 <role rolename="manager-gui"/>
+
 <role rolename="manager-jmx"/>
+
 <role rolename="manager-status"/>
+
 <role rolename="manager"/>
+
 <role rolename="admin"/>
+
 <user password="password" roles="tomcat" username="admin"/>
+
 <user password="password" roles="manager-gui" username="admin"/>
+
 <user password="password" roles="admin,admin-script,manager-gui,manager-script,manager-jmx,manager-status" username="admin"/>
 
 :wq!
