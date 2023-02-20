@@ -24,8 +24,6 @@ mvn package
 cp target/java-tomcat-maven-example.war /usr/share/tomcat/webapps/
 
 
-# jenkins-docker-project
-
 Maven:
 
 POM.XML   
