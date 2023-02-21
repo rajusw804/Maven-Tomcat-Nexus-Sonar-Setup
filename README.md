@@ -6,9 +6,9 @@ systemctl start tomcat
 
 systemctl enable tomcat
 
-Jenkins installation:
+----------------------------------------------------------------------------------------------------------------------
 
-Jenkins:
+Jenkins installation:
 
 sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
 
@@ -23,6 +23,8 @@ echo "--------Jenkins,Java installed"
 sudo systemctl enable jenkins
 
 sudo systemctl start jenkins
+
+----------------------------------------------------------------------------------------------------------------------
 
 vi /usr/share/tomcat/conf/tomcat-users.xml
 
@@ -39,6 +41,7 @@ mvn package
 
 cp target/java-tomcat-maven-example.war /usr/share/tomcat/webapps/
 
+----------------------------------------------------------------------------------------------------------------------
 
 Maven:
 
