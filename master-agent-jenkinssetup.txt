@@ -1,0 +1,50 @@
+	Master side
+	Jenkins installation:
+
+	yum install git maven java-openjdk11 tree -y
+
+	sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+
+	sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+	sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+	sudo yum install jenkins -y
+
+	echo "--------Jenkins,Java installed"
+
+	sudo systemctl enable jenkins
+
+	sudo systemctl start jenkins
+
+	ssh-keygen
+
+	ssh-copy-id root@54.175.253.221
+
+	ssh-copy-id jenkins@54.175.253.221
+
+	mkdir /home/jenkins/
+
+
+	mkdir /var/lib/jenkins/.ssh
+	cp /root/.ssh/known_hosts /var/lib/jenkins/.ssh/
+	chmod 777 /var/lib/jenkins/.ssh/known_hosts 
+
+	--------------------------------------------------------------------------------------------------------
+	Agent side:
+
+	yum install git maven java-openjdk11 tree -y
+
+	ssh-keygen
+
+	vi /etc/ssh/sshd_config 
+	systemctl restart sshd
+	passwd 
+
+	useradd jenkins
+
+	passwd jenkins
+
+	su jenkins
+
+	ssh-keygen
