@@ -16,7 +16,7 @@ sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key 
 
-sudo yum -y install jenkins -y
+sudo yum install jenkins -y
 
 echo "--------Jenkins,Java installed"
 
