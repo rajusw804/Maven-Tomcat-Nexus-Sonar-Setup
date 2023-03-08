@@ -46,7 +46,7 @@ pipeline {
 
 stage('SonarQube scanning') {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('sonar_scanner') {
                     withCredentials([string(credentialsId: 'jenkins-maven', variable: '34e2006abd0d7e33a0df1ef63bba2cd10aaff906')]) {
                         sh """
                     mvn sonar:sonar \
