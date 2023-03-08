@@ -15,8 +15,35 @@ pipeline {
                 }
             }
         }
-    }   
-}
+   
+          post {
+                success {
+                    echo 'archiving....'
+                    archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+                }
+            }
+
+        stage('Unit Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                sh 'mvn verify -DskipUnitTests'
+            }
+        }
+        stage('Checkstyle Code Analysis') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+            post {
+                success {
+                    echo 'Generated Analysis Result'
+                }
+            }
+        }
+
 stage('SonarQube scanning') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -31,3 +58,5 @@ stage('SonarQube scanning') {
                 }
             }
         }
+}
+}
