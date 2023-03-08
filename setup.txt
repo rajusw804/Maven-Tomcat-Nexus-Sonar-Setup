@@ -114,7 +114,7 @@ sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
 vi /opt/sonarqube/bin/linux-x86-64/sonar.sh
 RUN_AS_USER=sonar
 
-sudo cd /opt/sonarqube/bin/linux-x86-64/
+cd /opt/sonarqube/bin/linux-x86-64/
 ./sonar.sh start
 ./sonar.sh status
 
