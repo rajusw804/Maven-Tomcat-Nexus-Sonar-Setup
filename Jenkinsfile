@@ -1,5 +1,12 @@
 pipeline {
     agent any
+       environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "52.91.126.158:8081"
+        NEXUS_REPOSITORY = "maven-nexus-repo"
+        NEXUS_CREDENTIAL_ID = "nexus-user-creds"
+    }
     stages {
         stage("Clone code from GitHub") {
             steps {
@@ -63,12 +70,12 @@ stage('SonarQube scanning') {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
-                            protocol: http,
-                            nexusUrl: http://52.91.126.158:8081,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
                             groupId: pom.groupId,
                             version: pom.version,
-                            repository: maven-nexus-repo,
-                            credentialsId: nexus-user-creds,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
                                 [artifactId: pom.artifactId,
                                 classifier: '',
