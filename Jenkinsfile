@@ -43,12 +43,6 @@ pipeline {
                 }
             }
         }
-
-stage('SonarQube scanning') {
-            steps {
-               sh 'ssh -t -t root@52.91.126.158 -o StrictHostKeyChecking=no "mvn sonar:sonar -Dsonar.host.url=http://52.91.126.158:9000 -Dsonar.login=34e2006abd0d7e33a0df1ef63bba2cd10aaff906"'
-                    }
-                }
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
