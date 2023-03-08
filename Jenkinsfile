@@ -51,13 +51,11 @@ pipeline {
             }
         }
 
-stage('SonarQube scanning') {
+		stage('SonarQube scanning') {
             steps {
                sh 'ssh -t -t root@xxxxxxxxx -o StrictHostKeyChecking=no "mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=xxxxxxxxxxxxx"'
                     }
                 }
-            }
-        }
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
@@ -93,7 +91,5 @@ stage('SonarQube scanning') {
                 }
             }
         }
-    }
-}
-}
-}
+    }	
+	}
