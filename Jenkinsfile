@@ -23,14 +23,6 @@ pipeline {
                 }
             }
         }
-   
-          post {
-                success {
-                    echo 'archiving....'
-                    archiveArtifacts artifacts: '**/*.war', followSymlinks: false
-                }
-            }
-
         stage('Unit Test') {
             steps {
                 sh 'mvn test'
