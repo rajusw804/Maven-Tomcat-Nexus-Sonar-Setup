@@ -120,3 +120,39 @@ sudo cd /opt/sonarqube/bin/linux-x86-64/
 
 Port : 9000
 Login to SonarQube  with default administrator username and password is admin.
+
+------------------------------------------------------------------------------------
+
+vi /etc/maven/settings.xml
+
+mvn install tomcat7:deploy
+
+mvn package
+
+cp target/java-tomcat-maven-example.war /usr/share/tomcat/webapps/
+
+Maven:
+
+POM.XML
+
+extensible markup Lanaguage
+
+Project object Model
+
+Lifecycle Phases :
+
+Compile
+
+Test : Target with surefire report
+
+Package : war/jar/ear
+
+clean : Deleteing target folder
+
+Repositories: 3
+
+Remote : Other server
+
+Local : /root/.m2/
+
+Centeral : https://repo.maven.apache.org/maven2/org/
