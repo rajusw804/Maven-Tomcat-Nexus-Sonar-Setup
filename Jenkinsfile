@@ -22,13 +22,6 @@ pipeline {
                 }
             }
         }
-   
-          post {
-                success {
-                    echo 'archiving....'
-                    archiveArtifacts artifacts: '**/*.war', followSymlinks: false
-                }
-            }
 
         stage('Unit Test') {
             steps {
@@ -44,16 +37,10 @@ pipeline {
             steps {
                 sh 'mvn checkstyle:checkstyle'
             }
-            post {
-                success {
-                    echo 'Generated Analysis Result'
-                }
-            }
-        }
 
-		stage('SonarQube scanning') {
+stage('SonarQube scanning') {
             steps {
-               sh 'ssh -t -t root@xxxxxxxxx -o StrictHostKeyChecking=no "mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=xxxxxxxxxxxxx"'
+               sh 'ssh -t -t root@xxxxxxxxx -o StrictHostKeyChecking=no "mvn sonar:sonar -Dsonar.host.url=http://52.91.126.158:9000 -Dsonar.login=34e2006abd0d7e33a0df1ef63bba2cd10aaff906"'
                     }
                 }
         stage("Publish to Nexus Repository Manager") {
