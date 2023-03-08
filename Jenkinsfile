@@ -46,14 +46,7 @@ pipeline {
 
 stage('SonarQube scanning') {
             steps {
-                withSonarQubeEnv('sonar_scanner') {
-                    withCredentials([string(credentialsId: 'jenkins-maven', variable: '34e2006abd0d7e33a0df1ef63bba2cd10aaff906')]) {
-                        sh """
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=maven \
-                    -Dsonar.host.url=http://52.91.126.158:9000 \
-                    -Dsonar.login=$SONAR_TOKEN
-                    """
+               sh 'ssh -t -t root@xxxxxxxxx -o StrictHostKeyChecking=no "mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=xxxxxxxxxxxxx"'
                     }
                 }
             }
