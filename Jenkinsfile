@@ -1,13 +1,5 @@
 pipeline {
     agent any
-
-    environment {
-        NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "52.91.126.158:8081"
-        NEXUS_REPOSITORY = "maven-nexus-repo"
-        NEXUS_CREDENTIAL_ID = "nexus-user-creds"
-    }
     stages {
         stage("Clone code from GitHub") {
             steps {
@@ -43,40 +35,21 @@ pipeline {
                 }
             }
         }
-        stage("Publish to Nexus Repository Manager") {
+      stage('SonarScanning') {
             steps {
-                script {
-                    pom = readMavenPom file: "pom.xml";
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-                        nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: pom.version,
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts: [
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: artifactPath,
-                                type: pom.packaging],
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: "pom.xml",
-                                type: "pom"]
-                            ]
-                        );
-                    } else {
-                        error "*** File: ${artifactPath}, could not be found";
-                    }
-                }
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://35.153.52.131:9000 -Dsonar.login=f5782cfeafd95d3216f992b6c35bbdfe5fd67ac3'
+            }
+			}
+        
+      stage("Publish to Nexus Repository Manager") {
+            steps {
+            sh 'mvn clean deploy'
+            }
+            }
+      stage("Deploy it to tomcat") {
+            steps {
+            sh 'mvn install tomcat7:deploy'
             }
         }
-    }
+}
 }
