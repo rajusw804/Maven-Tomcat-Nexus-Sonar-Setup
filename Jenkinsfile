@@ -37,7 +37,7 @@ pipeline {
         }
       stage('SonarScanning') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://35.153.52.131:9000 -Dsonar.login=f5782cfeafd95d3216f992b6c35bbdfe5fd67ac3'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f5782cfeafd95d3216f992b6c35bbdfe5fd67ac3'
             }
 			}
         
@@ -48,7 +48,7 @@ pipeline {
             }
       stage("Deploy it to tomcat") {
             steps {
-            sh 'mvn install tomcat7:deploy'
+            sh 'ssh -t -t root@18.206.198.11 -o StrictHostKeyChecking=no "mvn install tomcat7:deploy"'
             }
         }
 }
