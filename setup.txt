@@ -4,6 +4,8 @@ sudo apt update
 
 sudo apt install openjdk-8-jdk git tree maven wget unzip -y 
 
+cd /opt/
+
 sudo wget https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.29.2-02-unix.tar.gz
 
 sudo mkdir /opt/nexus
@@ -77,6 +79,13 @@ Port : 9000
 Login to SonarQube  with default administrator username and password is admin.
 
 ------------------------------------------------------------------------------------
+Tomcat Installation in ubuntu:
+VERSION=9.0.74
+
+wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz -P /tmp
+
+sudo tar -xf /tmp/apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
+sudo chown -R tomcat: /opt/tomcat
 
 Jenkins in ubuntu:
 
