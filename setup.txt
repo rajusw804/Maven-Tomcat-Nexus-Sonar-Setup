@@ -101,11 +101,18 @@ vi /opt/tomcat/conf/tomcat-users.xml
 <user password="password" roles="manager-gui" username="admin"/>
 <user password="password" roles="admin,admin-script,manager-gui,manager-script,manager-jmx,manager-status" username="admin"/>
 
-Please change the allow attribute value in the context.xml file, present in webapps/manager/META-INF folder.
+vi webapps/manager/META-INF/context.xml
+
+replace below with old line
 
 <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="\d+\.\d+\.\d+\.\d+" />
 
+cd bin/
+
+./startup.sh
+
+------------------------------------------
 Jenkins in ubuntu:
 
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
