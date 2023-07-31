@@ -84,6 +84,8 @@ VERSION=9.0.76
 
 wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz -P /tmp
 
+mkdir /opt/tomcat
+
 sudo tar -xf /tmp/apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
 sudo chown -R tomcat: /opt/tomcat
 
