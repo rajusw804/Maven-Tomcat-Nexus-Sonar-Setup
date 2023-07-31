@@ -80,7 +80,7 @@ Login to SonarQube  with default administrator username and password is admin.
 
 ------------------------------------------------------------------------------------
 Tomcat Installation in ubuntu:
-VERSION=9.0.74
+VERSION=9.0.76
 
 wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz -P /tmp
 
